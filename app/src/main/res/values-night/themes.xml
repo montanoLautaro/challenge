@@ -1,0 +1,10 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EldarWallet" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/primaryColorTheme</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="cardBackgroundColor">@color/background</item>
+        <item name="backgroundColor">@color/background</item>
+    </style>
+</resources>

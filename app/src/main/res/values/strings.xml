@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Eldar Wallet</string>
+
+    <!--LOGIN-->
+    <string name="main_tv_title">Demo de billetera virtual</string>
+    <string name="main_tv_description">Administre sus operaciones financieras en un solo lugar.</string>
+    <string name="go_login_btn">Iniciar con mi cuenta</string>
+    <string name="go_signup_btn">Crear una cuenta</string>
+
+    <string name="notAccountMsg">¿No tenes cuenta?</string>
+    <string name="AccountMsg">¿Ya tenes cuenta?</string>
+    <string name="signUpAccount">Crear</string>
+
+    <!--ADD CARD-->
+    <string name="addCard">Agregar tarjeta</string>
+</resources>

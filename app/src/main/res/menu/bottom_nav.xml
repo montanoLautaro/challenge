@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/home_ic"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/generateQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/qr_ic"
+        android:title="Crear QR" />
+    <item
+        android:id="@+id/payments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/payments_ic"
+        android:title="Pagos" />
+</menu>
