@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eldarwallet.R
@@ -49,6 +50,14 @@ class GenerateQrFragment : Fragment() {
                 binding.progressbar.visibility = VISIBLE
             } else {
                 binding.progressbar.visibility = INVISIBLE
+            }
+        }
+
+        generateQrViewModel.qr.observe(this.viewLifecycleOwner) {
+            if (it != null) {
+                binding.imgQr.setImageBitmap(it)
+            } else {
+                Toast.makeText(this.context, "Error al generar el QR", Toast.LENGTH_SHORT).show()
             }
         }
 

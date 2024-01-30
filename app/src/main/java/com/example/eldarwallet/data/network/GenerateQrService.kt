@@ -3,57 +3,42 @@ package com.example.eldarwallet.data.network
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-import okhttp3.ResponseBody
 import javax.inject.Inject
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class GenerateQrService @Inject constructor(
     private val api: GenerateQrCodeApiClient
 ) {
-    private val qrHeight = "250"
-    private val qrWidth = "250"
+    private val contentType = "application/x-www-form-urlencoded"
+    private val apiHost = "neutrinoapi-qr-code.p.rapidapi.com"
+    private val apiKey: String = "84c10046bdmshab98f71bc03eaecp1200eejsn33e76c85a8f0"
+
 
     suspend fun generateQrCode(content: String): Bitmap? {
         return withContext(Dispatchers.IO) {
             try {
-                val deferred = CompletableDeferred<Bitmap?>()
 
-                api.generateQR(content, qrWidth, qrHeight)
-                    .enqueue(object : Callback<ResponseBody> {
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            if (response.isSuccessful) {
-                                Log.d("generateQrCode", "${response.body()}")
+                val response = api.generateQR(contentType, apiKey, apiHost, content)
 
-                                // Convirtiendo el cuerpo de la respuesta a Bitmap
-                                val bitmap = BitmapFactory.decodeStream(response.body()?.byteStream())
-                                deferred.complete(bitmap)
-                            } else {
-                                deferred.complete(null)
-                            }
-                        }
+                Log.d("RESPONSE", " $response")
+                Log.d("GENERATEQR", "${response.raw()}")
+                Log.d("GENERATEQR", "${response.body()}")
+                Log.d("GENERATEQR", "${response.errorBody()}")
+                // Convierte el cuerpo de la respuesta a Bitmap si es necesario
+                // Manejar la respuesta exitosa aquí
+                val responseBody = response.body()
+                // Convierte el cuerpo de la respuesta a Bitmap si es necesario
+                BitmapFactory.decodeStream(responseBody?.byteStream())
 
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            deferred.complete(null)
-                        }
-                    })
 
-                deferred.await()
             } catch (e: Exception) {
                 Log.d("generateQrCode", "Exception on generateQrCode $e")
                 null
             }
         }
     }
-
-
 
 
 }

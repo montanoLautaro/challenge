@@ -5,6 +5,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -17,7 +21,7 @@ object NetworkModule {
     @Provides
     fun retrofitProvider(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://neutrinoapi-qr-code.p.rapidapi.com/")
+            .baseUrl("https://neutrinoapi-qr-code.p.rapidapi.com/qr-code/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -28,5 +32,6 @@ object NetworkModule {
     fun apiClientProvider(retrofit: Retrofit): GenerateQrCodeApiClient {
         return retrofit.create(GenerateQrCodeApiClient::class.java)
     }
+
 
 }

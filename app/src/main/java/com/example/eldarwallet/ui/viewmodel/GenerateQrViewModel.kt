@@ -1,6 +1,7 @@
 package com.example.eldarwallet.ui.viewmodel
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,9 @@ class GenerateQrViewModel @Inject constructor(
             isLoading.postValue(true)
 
             val result = generateQrUseCase(fullName!!)
+
+            Log.d("GENERATEQR", "$result")
+
 
             qr.postValue(result)
 
