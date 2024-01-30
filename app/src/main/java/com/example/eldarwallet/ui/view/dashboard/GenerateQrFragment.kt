@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.eldarwallet.R
 import com.example.eldarwallet.databinding.FragmentGenerateQrBinding
+import com.example.eldarwallet.ui.viewmodel.DashboardViewModel
 import com.example.eldarwallet.ui.viewmodel.GenerateQrViewModel
-import com.example.eldarwallet.ui.viewmodel.HomeViewModel
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class GenerateQrFragment : Fragment() {
 
     private lateinit var binding: FragmentGenerateQrBinding
     private val generateQrViewModel: GenerateQrViewModel by viewModels()
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +44,7 @@ class GenerateQrFragment : Fragment() {
     }
 
     private fun initObservers() {
-        homeViewModel.isLoading.observe(this.viewLifecycleOwner) {
+        dashboardViewModel.isLoading.observe(this.viewLifecycleOwner) {
             if (it) {
                 binding.progressbar.visibility = VISIBLE
             } else {

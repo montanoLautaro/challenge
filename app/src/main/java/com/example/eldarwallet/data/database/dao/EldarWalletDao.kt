@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.example.eldarwallet.data.database.entities.CardEntity
 import com.example.eldarwallet.data.database.entities.UserEntity
 import com.example.eldarwallet.data.database.entities.UserWhitCards
@@ -33,6 +34,9 @@ interface EldarWalletDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun deleteCard(card: CardEntity)
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun updateUser(userEntity: UserEntity): Int
 
 
 }

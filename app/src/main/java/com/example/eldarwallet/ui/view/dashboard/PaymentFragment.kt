@@ -1,60 +1,138 @@
 package com.example.eldarwallet.ui.view.dashboard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eldarwallet.R
+import com.example.eldarwallet.databinding.FragmentPaymentBinding
+import com.example.eldarwallet.domain.model.Card
+import com.example.eldarwallet.domain.model.User
+import com.example.eldarwallet.ui.adapter.CardDropDownItemAdapter
+import com.example.eldarwallet.ui.viewmodel.DashboardViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PaymentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class PaymentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentPaymentBinding
+    private val homeViewModel: DashboardViewModel by viewModels()
+    private var cardSelected: Card? = null
+    private lateinit var cardAdapter: CardDropDownItemAdapter
+    private var user: User? = null
+    private var payment = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_payment, container, false)
+        val view = inflater.inflate(R.layout.fragment_payment, container, false)
+        binding = FragmentPaymentBinding.bind(view)
+
+        homeViewModel.onCreate()
+
+
+        initAdapter()
+        initObservers()
+        initListeners()
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PaymentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PaymentFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun initListeners() {
+        binding.btnGeneratePay.setOnClickListener {
+            if (user != null) {
+                if (payment.isNotEmpty()) {
+                    if (cardSelected != null) {
+                        homeViewModel.generatePayment(user!!, payment, cardSelected!!)
+                    } else {
+                        Toast.makeText(
+                            this.context,
+                            "Tiene que seleccionar una tarjeta",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this.context,
+                        "El importe es obligatorio",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            } else {
+                Toast.makeText(
+                    this.context,
+                    "Error inesperado al generar el pago",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
+
+        }
     }
+
+    private fun initObservers() {
+        homeViewModel.isLoading.observe(this.viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
+        }
+
+        homeViewModel.userData.observe(this.viewLifecycleOwner) {
+            if (it != null) {
+                user = it
+                cardAdapter.updateList(it.cards)
+            }
+        }
+
+        homeViewModel.generatePaymentResult.observe(this.viewLifecycleOwner) {
+            Toast.makeText(
+                this.context,
+                it,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        binding.etAmountValue.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                payment = charSequence.toString()
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+            }
+        })
+    }
+
+    private fun initAdapter() {
+        cardAdapter =
+            CardDropDownItemAdapter(emptyList()) { cardSelected -> onCardSelected(cardSelected) }
+        binding.rvCardsPayment.setHasFixedSize(true)
+        binding.rvCardsPayment.layoutManager =
+            LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCardsPayment.adapter = cardAdapter
+    }
+
+    private fun onCardSelected(card: Card) {
+        cardSelected = card
+        binding.tvCardSelectedValue.text = card.pan.takeLast(3)
+    }
+
+
 }

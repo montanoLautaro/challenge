@@ -15,7 +15,7 @@ import com.example.eldarwallet.databinding.FragmentHomeBinding
 import com.example.eldarwallet.domain.model.Card
 import com.example.eldarwallet.ui.adapter.CardAdapter
 import com.example.eldarwallet.ui.view.CardFormActivity
-import com.example.eldarwallet.ui.viewmodel.HomeViewModel
+import com.example.eldarwallet.ui.viewmodel.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var cardAdapter: CardAdapter
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: DashboardViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         binding = FragmentHomeBinding.bind(view)
-
         homeViewModel.onCreate()
 
         initObservers()
@@ -51,7 +50,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initObservers() {
-        homeViewModel.isLoading.observe(this.viewLifecycleOwner){
+        homeViewModel.isLoading.observe(this.viewLifecycleOwner) {
             binding.progressBar.isVisible = it
         }
 
@@ -81,7 +80,7 @@ class HomeFragment : Fragment() {
 
     private fun onItemSelected(card: Card) {
         //todo editar la tarjeta
-
     }
+
 
 }

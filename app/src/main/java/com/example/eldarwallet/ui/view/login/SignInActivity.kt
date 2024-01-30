@@ -3,6 +3,7 @@ package com.example.eldarwallet.ui.view.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -35,6 +36,8 @@ class SignInActivity : AppCompatActivity() {
         loginViewModel.isSingInSuccessful.observe(this) {
             if (it) {
                 startActivity(Intent(this, DashboardActivity::class.java))
+            }else{
+                Toast.makeText(this, "El usuario no es válido", Toast.LENGTH_SHORT).show()
             }
         }
     }

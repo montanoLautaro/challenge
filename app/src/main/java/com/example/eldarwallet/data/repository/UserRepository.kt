@@ -14,21 +14,6 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val dao: EldarWalletDao
 ) {
-    suspend fun getAllUsersFromDb(): List<User> {
-        try {
-            val result = dao.getAllUsers()
-            return result.map { it.toDomain() }
-        } catch (e: SQLiteException) {
-            Log.d("exception", "SQLiteException on getAllUsersFromDb: ${e.cause} ")
-            Log.d("exception", "SQLiteException on getAllUsersFromDb: ${e.message} ")
-        } catch (e: Exception) {
-            Log.d("exception", "Exception on getAllUsersFromDb: ${e.cause} ")
-            Log.d("exception", "Exception on getAllUsersFromDb: ${e.message} ")
-        }
-
-        return emptyList()
-    }
-
     suspend fun createUser(newUser: User): Long? {
         try {
             return dao.insertUser(newUser.toDatabase())
@@ -107,5 +92,21 @@ class UserRepository @Inject constructor(
             userId = userId
 
         )
+    }
+
+    suspend fun generatePayment(user: User): Boolean {
+        try {
+            val id = dao.updateUser(user.toDatabase())
+            if (id >= 0) {
+                return true
+            }
+        } catch (e: SQLiteException) {
+            Log.d("exception", "SQLiteException on addCard: ${e.cause} ")
+            Log.d("exception", "SQLiteException on addCard: ${e.message} ")
+        } catch (e: Exception) {
+            Log.d("exception", "Exception on addCard: ${e.cause} ")
+            Log.d("exception", "Exception on addCard: ${e.message} ")
+        }
+        return false
     }
 }

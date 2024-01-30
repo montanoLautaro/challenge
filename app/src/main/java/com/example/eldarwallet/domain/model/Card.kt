@@ -10,6 +10,7 @@ data class Card(
     val cardHolder: String,
     val expirationDate: String,
     val cvcCode: String,
+    var isSelected: Boolean = false
 )
 
 //todo corregir los assert

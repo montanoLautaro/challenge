@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/qr_ic"
-        android:title="Crear QR" />
+        android:title="Generar QR" />
     <item
         android:id="@+id/payments"
         android:layout_width="wrap_content"

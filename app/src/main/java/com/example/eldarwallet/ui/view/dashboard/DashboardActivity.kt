@@ -1,14 +1,11 @@
 package com.example.eldarwallet.ui.view.dashboard
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.eldarwallet.R
 import com.example.eldarwallet.databinding.ActivityDashboardBinding
-import com.example.eldarwallet.ui.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
