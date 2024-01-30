@@ -2,11 +2,14 @@ package com.example.eldarwallet.ui.view.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.eldarwallet.R
 import com.example.eldarwallet.core.extensions.loseFocusAfterAction
 import com.example.eldarwallet.core.helpers.ValidateInputsHelper
 import com.example.eldarwallet.databinding.ActivitySignUpBinding
@@ -18,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private val loginViewModel: LoginViewModel by viewModels()
+    private var showHidePasswordFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,19 @@ class SignUpActivity : AppCompatActivity() {
             if (it) {
                 Toast.makeText(this, "Usuario creado con éxito", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, SignInActivity::class.java))
+            }
+        }
+        binding.btnPasswordVisibility.setOnClickListener {
+            showHidePasswordFlag = if (showHidePasswordFlag) {
+                binding.btnPasswordVisibility.setImageDrawable(getDrawable(R.drawable.visibility_off))
+                binding.etSignUpPassword.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
+                false
+            } else {
+                binding.etSignUpPassword.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+                binding.btnPasswordVisibility.setImageDrawable(getDrawable(R.drawable.visibility_on))
+                true
             }
         }
     }
