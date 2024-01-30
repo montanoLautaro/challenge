@@ -16,12 +16,16 @@ data class UserWhitCards(
 
 fun User.toDatabaseRelationated(id: Long) = UserWhitCards(
     user = UserEntity(
-        email = email, password = password,name = name, balance = balance, lastName = lastName
+        email = email, password = password, name = name, balance = balance, lastName = lastName
     ),
     cards = cards.map { it.toDatabase(id) },
 )
 
 
 fun User.toDatabase() = UserEntity(
-    email = email,password = password,  name = name, balance = balance, lastName = lastName
+    email = email, password = password, name = name, balance = balance, lastName = lastName
+)
+
+fun User.toDatabaseWhitId() = UserEntity(
+    email = email, password = password, name = name, balance = balance, lastName = lastName, id = id!!
 )

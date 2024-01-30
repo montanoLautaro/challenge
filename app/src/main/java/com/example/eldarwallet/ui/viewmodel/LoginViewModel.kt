@@ -1,6 +1,6 @@
 package com.example.eldarwallet.ui.viewmodel
 
-import android.util.Log
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,7 +36,6 @@ class LoginViewModel @Inject constructor(
             isLoading.postValue(true)
 
             val result = signInUseCase(email, password)
-            Log.d("signInUser", "---------result: $result")
             isLoading.postValue(false)
 
             isSingInSuccessful.postValue(result)

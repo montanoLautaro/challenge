@@ -13,4 +13,12 @@
 
     <!--ADD CARD-->
     <string name="addCard">Agregar tarjeta</string>
+
+
+
+
+    <!--ADD BALANCE-->
+    <string name="addBalance">Agregar saldo</string>
+    <string name="input_amount">Ingrese el monto</string>
+    <string name="add">Agregar</string>
 </resources>

@@ -23,7 +23,7 @@ class GeneratePaymentUseCase @Inject constructor(
                 newBalance.toString(),
                 user.cards
             )
-            val result = repository.generatePayment(newUser)
+            val result = repository.updateUser(newUser)
             if (result) {
                 return "Pago realizado con éxito"
             }

@@ -14,6 +14,7 @@ import com.example.eldarwallet.core.helpers.TextHelper
 import com.example.eldarwallet.databinding.FragmentHomeBinding
 import com.example.eldarwallet.domain.model.Card
 import com.example.eldarwallet.ui.adapter.CardAdapter
+import com.example.eldarwallet.ui.view.AddBalanceActivity
 import com.example.eldarwallet.ui.view.CardFormActivity
 import com.example.eldarwallet.ui.viewmodel.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         binding = FragmentHomeBinding.bind(view)
-        homeViewModel.onCreate()
+        homeViewModel.getUserData()
 
         initObservers()
         initAdapter()
@@ -44,6 +45,9 @@ class HomeFragment : Fragment() {
     private fun initListeners() {
         binding.btnGoToAddCard.setOnClickListener {
             startActivity(Intent(this.context, CardFormActivity::class.java))
+        }
+        binding.btnGoToAddBalance.setOnClickListener {
+            startActivity(Intent(this.context, AddBalanceActivity::class.java))
         }
 
 

@@ -6,6 +6,7 @@ import com.example.eldarwallet.core.helpers.EncryptionHelper
 import com.example.eldarwallet.data.database.dao.EldarWalletDao
 import com.example.eldarwallet.data.database.entities.CardEntity
 import com.example.eldarwallet.data.database.entities.toDatabase
+import com.example.eldarwallet.data.database.entities.toDatabaseWhitId
 import com.example.eldarwallet.domain.model.Card
 import com.example.eldarwallet.domain.model.User
 import com.example.eldarwallet.domain.model.toDomain
@@ -94,10 +95,12 @@ class UserRepository @Inject constructor(
         )
     }
 
-    suspend fun generatePayment(user: User): Boolean {
+    suspend fun updateUser(user: User): Boolean {
         try {
-            val id = dao.updateUser(user.toDatabase())
-            if (id >= 0) {
+            Log.d("updateUser", "entro")
+            val id = dao.updateUser(user.toDatabaseWhitId())
+            Log.d("updateUser", "$id")
+            if (id > 0) {
                 return true
             }
         } catch (e: SQLiteException) {

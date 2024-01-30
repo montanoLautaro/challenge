@@ -11,6 +11,7 @@ import kotlin.text.Charsets.UTF_8
 class EncryptionHelper {
 
     companion object {
+        //todo CONTRASEÑA DE PRUEBA
         private val password =
             "Vr{=Dy?Q47fK+BL:2tk5v;L7D>Hj4c^ZKfbp%RxG#S8UX9`G%y!hD_{v*NrA>uJaDqyfE.2&B%R3?hG@TtJ}px8#_WkK;7j.-N>2eaGS`B"
         private val salt = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8)
@@ -39,5 +40,4 @@ class EncryptionHelper {
     }
 }
 
-//val decryptedData = encryptionManager.decrypt(encryptedData)
 

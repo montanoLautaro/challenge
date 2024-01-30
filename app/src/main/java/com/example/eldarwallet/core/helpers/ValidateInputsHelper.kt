@@ -1,5 +1,11 @@
 package com.example.eldarwallet.core.helpers
 
+import android.util.Log
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class ValidateInputsHelper {
     companion object {
         private val regexName = Regex("^[a-zA-Z'\\sñÑáéíóúÁÉÍÓÚ]+$")
@@ -45,8 +51,22 @@ class ValidateInputsHelper {
         fun validateDate(date: String): String {
             if (date.isEmpty()) return "El campo es requerido"
             if (date.length != 4) return "Ingrese una fecha válida, ej: 0124"
+            if (!dateValidateFormat(date)) return "Ingrese una fecha válida, ej: 0124"
             return ""
         }
+
+        private fun dateValidateFormat(date: String): Boolean {
+            val format = SimpleDateFormat("MMyy", Locale.getDefault())
+            format.isLenient = false
+            try {
+                val fecha = format.parse(date)
+                return fecha != null && !fecha.before(Date())
+            } catch (e: ParseException) {
+                Log.d("dateValidateFormat", "$e")
+            }
+            return false
+        }
+
 
         fun validateCvc(cvc: String): String {
             if (cvc.isEmpty()) return "El campo es requerido"

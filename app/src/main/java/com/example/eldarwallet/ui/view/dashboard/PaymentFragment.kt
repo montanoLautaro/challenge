@@ -36,7 +36,7 @@ class PaymentFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_payment, container, false)
         binding = FragmentPaymentBinding.bind(view)
 
-        homeViewModel.onCreate()
+        homeViewModel.getUserData()
 
 
         initAdapter()

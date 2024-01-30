@@ -40,11 +40,11 @@ class CardFormActivity : AppCompatActivity() {
             binding.progressbar.isVisible = it
         }
 
-        cardFormViewModel.isSuccess.observe(this){
-            if(it){
+        cardFormViewModel.isSuccess.observe(this) {
+            if (it) {
                 Toast.makeText(this, "Tarjeta guardada", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, DashboardActivity::class.java))
-            }else{
+            } else {
                 Toast.makeText(this, "Error al guardar la tarjeta", Toast.LENGTH_SHORT).show()
             }
         }
@@ -64,7 +64,7 @@ class CardFormActivity : AppCompatActivity() {
             '3' -> CardBrand.AMERICAN_EXPRESS.value
             '4' -> CardBrand.VISA.value
             '5' -> CardBrand.MASTERCARD.value
-            else -> ""
+            else -> "Otro"
         }
 
         return Card(

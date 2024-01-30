@@ -24,7 +24,7 @@ class DashboardViewModel @Inject constructor(
     val generatePaymentResult = MutableLiveData<String>()
 
 
-    fun onCreate() {
+    fun getUserData() {
         viewModelScope.launch {
             val id = prefs.getId()
             isLoading.postValue(true)
